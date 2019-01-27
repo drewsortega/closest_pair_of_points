@@ -13,20 +13,50 @@ def closest_points(points):
     if num_points == 2:
         return helper.compare(points[0], points[1], min_result)
 
-    # Median Index
+    # Median Index (point[med_index] = Xm)
     med_index = math.ceil(num_points/2)
 
     left_points = points[:med_index]
     right_points = points[med_index:]
 
-    # Recursive calls TODO: check to see this is proper range
+    # left_result[0] = d1, right_result[0] = d2
+    # Recursive calls
     left_result = closest_points(left_points)
     right_result = closest_points(right_points)
 
+    # min_result[0] = d
+    # O(n)
     min_result = helper.combine_results(left_result, right_result)
 
-    sorted_left_points = sorted(left_points, key=lambda tup: tup[1])
-    sorted_right_points = sorted(right_points, key=lambda tup: tup[1])
+    # get X range of M ( [m_left_index, m_right_index])
+    # m_left_index is index of last point that qualifies Xm-d
+    # m_right_index is the last point that qualifies Xm+d
+    m_left_index = m_right_index = 0
+
+    # scan linearly until the point no longer is within the range
+    for (index, point) in enumerate(right_points):
+        if(abs(points[med_index][0] - point[0]) > min_result[0]):
+            break
+        m_right_index = index
+
+    # scan linearly until a point is within the range
+    for (index, point) in enumerate(left_points):
+        if(abs(points[med_index][0] - point[0]) <= min_result[0]):
+            m_left_index = index
+            break
+
+    # get left points within the proper range on x, sorted by y
+    sorted_left_points = sorted(
+        left_points[m_left_index:],
+        key=lambda tup: tup[1]
+    )
+
+    # get right points within the proper range on x, sorted by y
+    sorted_right_points = sorted(
+        right_points[:m_right_index+1],
+        key=lambda tup: tup[1]
+    )
+
     mapped_indices = helper.map_indices(
         sorted_left_points, sorted_right_points)
 

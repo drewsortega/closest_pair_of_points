@@ -60,7 +60,6 @@ def compare(p1, p2, min_result):
         min_result = (dist, [(p1, p2)])
     elif dist == min_result[0]:
         min_result[1].append((p1, p2))
-    # print(p1[0], p1[1], p2[0], p1[1], min_result[0])
     return min_result
 
 

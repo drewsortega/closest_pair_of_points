@@ -29,8 +29,6 @@ def closest_points(points):
     sorted_right_points = sorted(right_points, key=lambda tup: tup[1])
     mapped_indices = helper.map_indices(
         sorted_left_points, sorted_right_points)
-    # TODO: find out why there are duplicate comparisons
-    # TODO: use pretty print
 
     # check for smaller distance
     for point_index, src_point in enumerate(sorted_left_points):
@@ -53,6 +51,8 @@ points = helper.parse_coords(sys.argv[1])
 sorted_points = sorted(points, key=lambda tup: tup[0])
 
 final_result = closest_points(sorted_points)
+
+# TODO: use pretty print
 print(final_result[0])
 for point in final_result[1]:
     print(point[0][0], point[0][1], point[1][0], point[1][1])

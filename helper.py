@@ -53,7 +53,7 @@ def sort_results(results):
     return(results)
 
 def pp_results(min_result,points,file_path):
-    if not os.path.exists("/output_files"):
+    if not os.path.exists("output_files"):
         os.makedirs("output_files")
     output = open(file_path,"w")
     sorted_points = sort_results(points)

@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import math
+import os
 
 
 def parse_coords(file_path):
@@ -52,6 +53,8 @@ def sort_results(results):
     return(results)
 
 def pp_results(min_result,points,file_path):
+    if not os.path.exists("/output_files"):
+        os.makedirs("output_files")
     output = open(file_path,"w")
     sorted_points = sort_results(points)
     output.write("%f\n" % min_result)

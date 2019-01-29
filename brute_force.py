@@ -25,4 +25,4 @@ for src_idx, source in enumerate(coordinates):
                     min_distance_points.clear()
                     min_distance_points.append((source,dest))
 
-helper.pp_results(min_distance,min_distance_points)
+helper.pp_results(min_distance,min_distance_points,"output_files/output_brute_force.txt")

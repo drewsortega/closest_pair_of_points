@@ -51,11 +51,13 @@ def sort_results(results):
     results.sort(key=lambda tup: (tup[0], tup[1]))
     return(results)
 
-def pp_results(min_result,points):
+def pp_results(min_result,points,file_path):
+    output = open(file_path,"w")
     sorted_points = sort_results(points)
-    print(min_result)
+    output.write("%f\n" % min_result)
     for point in points:
-        print(point[0][0],point[0][1],point[1][0],point[1][1])
+        output.write("%d %d %d %d\n" % (point[0][0], point[0][1], point[1][0],point[1][1]))
+    output.close()
 
 def compare(p1, p2, min_result):
     dist = distance(p1, p2)

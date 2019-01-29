@@ -103,7 +103,7 @@ final_result = closest_points(sorted_points_x)
 stop = timeit.default_timer()
 
 # use the pretty print to sort the results and print them.
-helper.pp_results(final_result[0], final_result[1])
+helper.pp_results(final_result[0], final_result[1], "output_files/output_naive_dc.txt")
 
 if(len(sys.argv) >= 3 and sys.argv[2] == "-v"):
     print('\n---\nTime: ', stop - start)

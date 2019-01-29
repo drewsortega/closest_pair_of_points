@@ -4,14 +4,12 @@ import math
 
 def parse_coords(file_path):
     coords = []
-
     input_file = open(file_path, mode='r', encoding="utf-8")
     for line in input_file:
         pair_str = line.split()
         if (len(pair_str) == 2):
             coords.append((int(pair_str[0]), int(pair_str[1])))
     input_file.close()
-
     return(coords)
 
 
@@ -42,17 +40,22 @@ def map_indices(points1, points2):
 
 def sort_results(results):
     # organize the points so the smaller point is first
-    for result in results:
+    for idx,result in enumerate(results):
         if (result[0][0] > result[1][0]):
-            swap_tuple(result)
+            results[idx] = swap_tuple(result)            
         elif (result[0][0] == result[1][0]):
             # if same x, choose point with lower y coord
             if (result[0][1] > result[1][1]):
-                swap_tuple(result)
+                results[idx] = swap_tuple(result)
     # organize the list of tuples
     results.sort(key=lambda tup: (tup[0], tup[1]))
     return(results)
 
+def pp_results(min_result,points):
+    sorted_points = sort_results(points)
+    print(min_result)
+    for point in points:
+        print(point[0][0],point[0][1],point[1][0],point[1][1])
 
 def compare(p1, p2, min_result):
     dist = distance(p1, p2)

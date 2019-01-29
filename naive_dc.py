@@ -1,5 +1,6 @@
 import sys
 import math
+import timeit
 import helper
 
 
@@ -88,6 +89,8 @@ def closest_points(points):
     return min_result
 
 
+start = timeit.default_timer()
+
 # get input file from command argument
 points = helper.parse_coords(sys.argv[1])
 
@@ -97,5 +100,10 @@ sorted_points_x = sorted(points, key=lambda tup: tup[0])
 # do D&C call on the sorted points. Store the result.
 final_result = closest_points(sorted_points_x)
 
+stop = timeit.default_timer()
+
 # use the pretty print to sort the results and print them.
 helper.pp_results(final_result[0], final_result[1])
+
+if(len(sys.argv) >= 3 and sys.argv[2] == "-v"):
+    print('\n---\nTime: ', stop - start)

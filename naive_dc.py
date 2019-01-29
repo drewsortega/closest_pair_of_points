@@ -4,7 +4,12 @@ import helper
 
 
 def closest_points(points):
+    # num points (n)
     num_points = len(points)
+
+    # the generic structure for every "result" object.
+    #   result[0] - min distance
+    #   result[1] - List of tuples containing every point that has the min distance.
     min_result = (None, [])
 
     # Base cases
@@ -16,15 +21,18 @@ def closest_points(points):
     # Median Index (point[med_index] = Xm)
     med_index = math.ceil(num_points/2)
 
+    # Get subsets of the points for the two recursive calls. Held in their own variable to be sorted on y later.
     left_points = points[:med_index]
     right_points = points[med_index:]
 
-    # left_result[0] = d1, right_result[0] = d2
+    # left_result[0] (d1), right_result[0] (d2)
     # Recursive calls
     left_result = closest_points(left_points)
     right_result = closest_points(right_points)
 
-    # min_result[0] = d
+    # min_result[0] (d)
+    # compares the two recursive calls results and chooses the best result of the two. if they are the same,
+    # keep them and combine the results.
     # O(n)
     min_result = helper.combine_results(left_result, right_result)
 
@@ -46,30 +54,33 @@ def closest_points(points):
             break
 
     # get left points within the proper range on x, sorted by y
-    sorted_left_points = sorted(
+    sorted_left_points_y = sorted(
         left_points[m_left_index:],
         key=lambda tup: tup[1]
     )
 
     # get right points within the proper range on x, sorted by y
-    sorted_right_points = sorted(
+    sorted_right_points_y = sorted(
         right_points[:m_right_index+1],
         key=lambda tup: tup[1]
     )
 
+    # map the indices of the sorted left and right point lists.
+    # essentially, given some index i for a point in the left,
+    # give the index i for the closest point in the y for the left.
     mapped_indices = helper.map_indices(
-        sorted_left_points, sorted_right_points)
+        sorted_left_points_y, sorted_right_points_y)
 
-    # check for smaller distance
-    for point_index, src_point in enumerate(sorted_left_points):
+    # check for smaller distance in center.
+    for point_index, src_point in enumerate(sorted_left_points_y):
         # compare points with y > src
-        for dest_point in sorted_right_points[mapped_indices[point_index]:]:
+        for dest_point in sorted_right_points_y[mapped_indices[point_index]:]:
             if min_result[0] != None and abs(dest_point[1] - src_point[1]) > min_result[0]:
                 break
             min_result = helper.compare(src_point, dest_point, min_result)
 
         # compare points with y < src
-        for dest_point in reversed(sorted_right_points[:mapped_indices[point_index]]):
+        for dest_point in reversed(sorted_right_points_y[:mapped_indices[point_index]]):
             if min_result[0] != None and abs(dest_point[1] - src_point[1]) > min_result[0]:
                 break
             min_result = helper.compare(src_point, dest_point, min_result)
@@ -77,12 +88,14 @@ def closest_points(points):
     return min_result
 
 
+# get input file from command argument
 points = helper.parse_coords(sys.argv[1])
-sorted_points = sorted(points, key=lambda tup: tup[0])
 
-final_result = closest_points(sorted_points)
+# sort points on x
+sorted_points_x = sorted(points, key=lambda tup: tup[0])
 
-# TODO: use pretty print
-print(final_result[0])
-for point in final_result[1]:
-    print(point[0][0], point[0][1], point[1][0], point[1][1])
+# do D&C call on the sorted points. Store the result.
+final_result = closest_points(sorted_points_x)
+
+# use the pretty print to sort the results and print them.
+helper.pp_results(final_result[0], final_result[1])

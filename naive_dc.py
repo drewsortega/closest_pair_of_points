@@ -54,6 +54,7 @@ def closest_points(points):
             m_left_index = index
             break
 
+    sorted_left_points_y_timer = timeit.default_timer()
     # get left points within the proper range on x, sorted by y
     sorted_left_points_y = sorted(
         left_points[m_left_index:],
@@ -65,6 +66,9 @@ def closest_points(points):
         right_points[:m_right_index+1],
         key=lambda tup: tup[1]
     )
+
+    sorted_left_points_y_stop = timeit.default_timer()
+    #print('\n---\nTime: ', sorted_left_points_y_stop - sorted_left_points_y_timer)
 
     # map the indices of the sorted left and right point lists.
     # essentially, given some index i for a point in the left,
@@ -89,8 +93,6 @@ def closest_points(points):
     return min_result
 
 
-start = timeit.default_timer()
-
 # get input file from command argument
 points = helper.parse_coords(sys.argv[1])
 
@@ -98,8 +100,8 @@ points = helper.parse_coords(sys.argv[1])
 sorted_points_x = sorted(points, key=lambda tup: tup[0])
 
 # do D&C call on the sorted points. Store the result.
+start = timeit.default_timer()
 final_result = closest_points(sorted_points_x)
-
 stop = timeit.default_timer()
 
 # use the pretty print to sort the results and print them.

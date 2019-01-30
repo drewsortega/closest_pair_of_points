@@ -59,7 +59,7 @@ def pp_results(min_result,points,file_path):
     output = open(file_path,"w")
     sorted_points = sort_results(points)
     output.write("%f\n" % min_result)
-    for point in points:
+    for point in sorted_points:
         output.write("%d %d %d %d\n" % (point[0][0], point[0][1], point[1][0],point[1][1]))
     output.close()
 

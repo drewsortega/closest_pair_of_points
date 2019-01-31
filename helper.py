@@ -97,8 +97,8 @@ def get_points_from_sorted_y(master_list, x_min, x_max):
 def generate_sample_set(size, file_path):
     # generate samples
     points = []
-    x_points = random.sample(range(1, 1000000), size)
-    y_points = random.sample(range(1, 1000000), size)
+    x_points = random.sample(range(1, 10000000), size)
+    y_points = random.sample(range(1, 10000000), size)
     for x_point, y_point, in zip(x_points, y_points):
         points.append((x_point, y_point))
     # write them to a file
@@ -113,8 +113,8 @@ def generate_sample_set(size, file_path):
 
 
 def create_samples():
-    sample_sizes = [10**2, 10**3, 10**4, 10**5]
+    sample_sizes = [10**2, 10**3, 10**4, 10**5, 10**6]
     sample_file_names = ["100_points.txt", "1000_points.txt",
-                         "10000_points.txt", "100000_points.txt"]
+                         "10000_points.txt", "100000_points.txt","1000000_points.txt"]
     for size, name in zip(sample_sizes, sample_file_names):
         generate_sample_set(size, "randomly_generated_points/%s" % name)

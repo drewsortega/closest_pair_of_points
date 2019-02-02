@@ -16,21 +16,22 @@ for src_idx, source in enumerate(coordinates):
             # First point
             if (min_distance == None):
                 min_distance = helper.distance(source, dest)
-                min_distance_points.append((source,dest))
+                min_distance_points.append((source, dest))
             else:
                 distance = helper.distance(source, dest)
                 # Found a pair with the same distance
                 if (distance == min_distance):
-                    min_distance_points.append((source,dest))
+                    min_distance_points.append((source, dest))
                 # Found a smaller distance
                 elif (distance < min_distance):
                     min_distance = distance
                     min_distance_points.clear()
-                    min_distance_points.append((source,dest))
+                    min_distance_points.append((source, dest))
 # stop timer
 stop = timeit.default_timer()
 
-helper.pp_results(min_distance,min_distance_points,"output_files/output_brute_force.txt")
+helper.pp_results(min_distance, min_distance_points,
+                  "output_files/output_brute_force.txt")
 
 if(len(sys.argv) >= 3 and sys.argv[2] == "-v"):
     print('\n---\nTime: ', stop - start)

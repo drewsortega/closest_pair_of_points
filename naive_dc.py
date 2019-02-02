@@ -39,10 +39,7 @@ def closest_points(points):
     min_result = helper.combine_results(left_result, right_result)
 
     # get left points within the proper range on x, sorted by y
-    points_y = sorted(
-        points,
-        key=lambda tup: tup[1]
-    )
+    points_y = helper.merge_sort(points, 1)
 
     # get deviation between delta
     dev_max = float(med_point[0])+min_result[0]
@@ -65,7 +62,7 @@ def closest_points(points):
 points = helper.parse_coords(sys.argv[1])
 
 # sort points on x
-sorted_points_x = sorted(points, key=lambda tup: tup[0])
+sorted_points_x = helper.merge_sort(points, 0)
 
 # do D&C call on the sorted points. Store the result.
 start = timeit.default_timer()

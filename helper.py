@@ -26,20 +26,6 @@ def swap_tuple(tup):
     return((tup[1], tup[0]))
 
 
-def map_indices(points1, points2):
-    current_index = 0
-    mapped_indices = []
-    for (index, point) in enumerate(points2):
-        if len(mapped_indices) == len(points1):
-            return mapped_indices
-        if point[1] >= points1[current_index][1]:
-            mapped_indices.append(index)
-            current_index += 1
-    while(len(mapped_indices) < len(points1)):
-        mapped_indices.append(len(points2)-1)
-    return mapped_indices
-
-
 def sort_results(results):
     # organize the points so the smaller point is first
     for idx, result in enumerate(results):
@@ -115,6 +101,53 @@ def generate_sample_set(size, file_path):
 def create_samples():
     sample_sizes = [10**2, 10**3, 10**4, 10**5, 10**6]
     sample_file_names = ["100_points.txt", "1000_points.txt",
-                         "10000_points.txt", "100000_points.txt","1000000_points.txt"]
+                         "10000_points.txt", "100000_points.txt", "1000000_points.txt"]
     for size, name in zip(sample_sizes, sample_file_names):
         generate_sample_set(size, "randomly_generated_points/%s" % name)
+
+
+def merge_sort(points, index):
+    # index represents if the points should be sorted on X or Y.
+    # 0: sort on X
+    # 1: sort on Y
+
+    # get number of points to sort
+    n = len(points)
+
+    # base cases
+    if n == 1:
+        return points
+    elif n == 2:
+        if(points[0][index] <= points[1][index]):
+            return points
+        else:
+            return [points[1], points[0]]
+
+    median_index = math.ceil(n/2)
+
+    # split points in two
+    left_points = points[:median_index]
+    right_points = points[median_index:]
+
+    # recursive calls on each half
+    sorted_left = merge_sort(left_points, index)
+    sorted_right = merge_sort(right_points, index)
+
+    sorted_points = []
+    left_index = right_index = 0
+    while left_index < len(sorted_left) and right_index < len(sorted_right):
+        if sorted_left[left_index][index] <= sorted_right[right_index][index]:
+            sorted_points.append(sorted_left[left_index])
+            left_index = left_index + 1
+        else:
+            sorted_points.append(sorted_right[right_index])
+            right_index = right_index + 1
+
+    if left_index < len(sorted_left):
+        for point in sorted_left[left_index:]:
+            sorted_points.append(point)
+    elif right_index < len(sorted_right):
+        for point in sorted_right[right_index:]:
+            sorted_points.append(point)
+
+    return sorted_points

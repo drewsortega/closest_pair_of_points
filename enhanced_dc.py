@@ -68,7 +68,7 @@ points = helper.parse_coords(sys.argv[1])
 
 # sort points on x
 sorted_points_x = sorted(points, key=lambda tup: tup[0])
-sorted_points_y = sorted(points, key=lambda tup: tup[1])
+sorted_points_y = sorted(sorted_points_x, key=lambda tup: tup[1])
 
 start = timeit.default_timer()
 final_result = closest_points(sorted_points_x, sorted_points_y)

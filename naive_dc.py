@@ -73,5 +73,6 @@ stop = timeit.default_timer()
 helper.pp_results(final_result[0], final_result[1],
                   "output_files/output_naive_dc.txt")
 
+# verbosity for timing
 if(len(sys.argv) >= 3 and sys.argv[2] == "-v"):
     print('\n---\nTime: ', stop - start)

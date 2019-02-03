@@ -27,6 +27,7 @@ def closest_points(points_x, points_y):
     left_points_x = points_x[:med_index]
     right_points_x = points_x[med_index:]
 
+    # iterate through sorted y points. find which y points belong on the left vs right based on the x median.
     left_points_y = []
     right_points_y = []
     for point in points_y:
@@ -46,14 +47,20 @@ def closest_points(points_x, points_y):
     # O(n)
     min_result = helper.combine_results(left_result, right_result)
 
+    # get the X range based on the current minimum distance. Median +/- Delta
     dev_max = float(med_point[0])+min_result[0]
     dev_min = float(med_point[0])-min_result[0]
 
+    # pull out puts in the center area from the sorted y
     points_center_y = []
     for point in points_y:
         if(point[0] >= dev_min and point[0] <= dev_max):
             points_center_y.append(point)
+
+    # calculate the number of points in the center
     num_in_center = len(points_center_y)
+
+    # go through center points and find the closest points. overwrite min if necessary.
     for (i1, point1) in enumerate(points_center_y):
         # maximum of 8 iterations
         for point2 in points_center_y[i1+1:min(num_in_center, 8+i1)]:
@@ -64,14 +71,18 @@ def closest_points(points_x, points_y):
 
 # get input file from command argument
 points = helper.parse_coords(sys.argv[1])
-# points = helper.parse_coords(sys.argv[1])
 
 # sort points on x
 sorted_points_x = sorted(points, key=lambda tup: tup[0])
 sorted_points_y = sorted(sorted_points_x, key=lambda tup: tup[1])
 
+# start timer
 start = timeit.default_timer()
+
+# do recursive call
 final_result = closest_points(sorted_points_x, sorted_points_y)
+
+# stop timer
 stop = timeit.default_timer()
 
 # use the pretty print to sort the results and print them.

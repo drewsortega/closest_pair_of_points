@@ -1,3 +1,8 @@
+CLOSEST PAIR OF POINTS
+By:
+Drew Ortega
+Taylor Griffin
+
 The three closest pair algorithms can be run by executing the 
 following commands on a machine with python3 installed.
 

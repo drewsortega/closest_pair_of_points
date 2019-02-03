@@ -20,3 +20,10 @@ Results are written to output_files/output_naive_dc.txt
 $ python3 enhanced_dc.py path_to_input_file
 ```
 Results are written to output_files/output_enhanced_dc.txt
+
+## Timing Analysis
+To run any of the implementations with a timing printed to the standard output,
+run as the following with the -v flag, after the specified input file:
+```bash
+$ python3 [IMPLEMENTATION_FILE].py path_to_input_file -v
+```

@@ -9,5 +9,5 @@ python3 naive_dc.py path_to_input_file
 Results are written to output_files/output_naive_dc.txt
 
 === Enhanced Divide & Conquer ===
-python3 enhanced_dc.py path_to_input file
+python3 enhanced_dc.py path_to_input_file
 Results are written to output_files/output_enhanced_dc.txt

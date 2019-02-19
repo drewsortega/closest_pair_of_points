@@ -1,4 +1,5 @@
-# cs325-assignment1
+# Closest Pair of Points
+## CS325 Assignment 1 - Divide & Conquer
 ### By: Drew Ortega, Taylor Griffin
 closest pair of points implementation
 
